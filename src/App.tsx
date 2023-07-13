@@ -1,22 +1,25 @@
 import { useEffect, useReducer } from "react";
 import Stoplight from "./Stoplight";
 
-// Don't worry if you don't understand what the logic is doing. It's just a way
-// to make sure that you're dealing with your side effects properly, by setting
-// up the app to destroy your component instance and rebuld it from scratch
-// every six seconds
+// Flip this to true once you're ready to test out your effects
+const destroyEvery6Seconds = false;
+
+// Don't worry if you don't understand what the logic is doing. A lot of this
+// is kind of hacky to compensate for the fact that I didn't have time to make
+// any component tests
 export default function App() {
-  const [keyBoolean, toggleKeyBoolean] = useReducer((bool) => !bool, true);
-  const mountKey = String(keyBoolean);
+  const [destructionVal, toggleDestructionVal] = useReducer((bool) => {
+    return destroyEvery6Seconds ? !bool : true;
+  }, true);
 
   useEffect(() => {
-    const intervalId = window.setInterval(toggleKeyBoolean, 6_000);
+    const intervalId = window.setInterval(toggleDestructionVal, 6_000);
     return () => window.clearInterval(intervalId);
   }, []);
 
   return (
     <main>
-      <Stoplight key={mountKey} />
+      <Stoplight key={String(destructionVal)} />
     </main>
   );
 }

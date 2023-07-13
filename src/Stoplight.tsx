@@ -1,7 +1,9 @@
 /**
  * If you haven't used CSS modules before, you can access the class names like
  * this:
- * <p classname={styles.stoplightContainer}>Example</p>
+ * <p classname={styles.stoplightContainer}>
+ *   Example Text
+ * </p>
  */
 import styles from "./Stoplight.module.css";
 
